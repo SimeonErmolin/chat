@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+}
+.body-color {
+  background: #535353;
+}
+p {
+  padding: 0;
+  margin: 0;
+}
+.page {
+  margin-top: 5rem;
+  width: 304px;
+}
+.hidden{
+  display: none;
+}
+.btn {
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  padding: 5px 8px;
+  background: inherit;
+  border: 1px solid #000000;
+  font-size: 16px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.form {
+  display: flex;
+  justify-content: space-between;
+}
+.text-message {
+  width: 248px;
+  cursor: text;
+}
+.chat-window {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 437px;
+  border: 1px solid #000000;
+  overflow: auto;
+}
+.user-message {
+  clear: both;
+  display: flex;
+  justify-content: end;
+  position: relative;
+  max-width: 270px;
+  margin: 8px 8px 0;
+  padding: 8px;
+  padding-bottom: 28px;
+  background: #F7F7F7;
+  word-wrap: break-word;
+}
+.my-message {
+  float: right;
+}
+.another-message {
+  float: left;
+}
+.delivered {
+  background: #E5E5E5;
+}
+.nick {
+  display: inline;
+  white-space: nowrap;
+}
+.nickname {
+  font-style: normal;
+}
+.message {
+  display: inline;
+  max-width: 250px;
+}
+.time {
+  position: absolute;
+  bottom: 10px;
+  font-size: 14px;
+}
+.popap {
+  margin-top: 5rem;
+  display: none;
+  position: relative;
+  background: #fff;
+  width: 273px;
+  height: 319px;
+  padding: 15px;
+  border: 1px solid #000;
+}
+.active {
+  display: block;
+}
+.close {
+  transform: rotate(45deg);
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  border: none;
+  font-size: 27px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.name {
+  margin-top: 10px;
+  margin-right: 8px;
+  width: 200px;
+  height: 32px;
+  cursor: text;
+}
+.popap-title {
+  margin-bottom: 15px;
+}
+.btn-popap {
+  cursor: pointer;
+  padding: 12px;
+  background: inherit;
+  border: 1px solid #000000;
+  font-size: 16px;
+}
+.input-popap {
+  margin-top: 5px;
+  width: 255px;
+  height: 32px;
+  cursor: text;
+  padding: 5px 8px;
+  background: inherit;
+  border: 1px solid #000000;
+  font-size: 16px;
+}
+.form-popap {
+  margin-top: 80px;
+}
+.get-code, .to-enter {
+  margin-top: 10px;
+}

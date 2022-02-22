@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Chat</title>
+</head>
+
+<body>
+  <div class="page">
+    <div class="buttons">
+      <button class="btn settings">Настройки</button>
+      <button class="btn out">Выйти</button>
+    </div>
+
+    <div class="chat-window">
+      <div class="user-message my-message delivered">
+        <p class="nick">Я:&nbsp;</p>
+        <p class="message">Добрый день!</p>
+        <i class="time">18:45</i>
+      </div>
+
+      <div class="user-message another-message delivered">
+        <p class="nick">Собеседник мой:&nbsp;</p>
+        <p class="message">Добрый день!</p>
+        <i class="time">18:45</i>
+      </div>
+
+      <div class="user-message another-message delivered">
+        <span>
+          <p class="nick">Собеседник мой:&nbsp;</p>
+          <p class="message">А это второе и, кажется, оно очень длинное, чтобы поместиться на одной строке</p>
+        </span>
+        <i class="time">18:45</i>
+      </div>
+      <template class="template-my-message">
+        <div class="user-message my-message">
+          <span>
+            <p class="nick"><i class="nickname">Я</i>:&nbsp;</p>
+            <p class="message" id="message">Добрый день!</p>
+          </span>
+          <i class="time">18:45</i>
+        </div>
+      </template>
+    </div>
+    <form action="" class="form">
+      <input type="text" placeholder="сообщение.." class="btn text-message">
+      <button type="submit" class="btn send-message">-></button>
+    </form>
+  </div>
+
+  <div class="popap popap--name">
+    <p class="popap-title">Настройки</p>
+    <button class="btn close">+</button>
+
+    <form action="" class="form-settings">
+      <label for="name">Имя в чате</label>
+      <input type="text" placeholder="Введите имя.." class="btn name">
+      <button type="submit" class="btn-popap send-name">-></button>
+    </form>
+  </div>
+
+  <div class="popap popap--authorization">
+    <p class="popap-title">Авторизация</p>
+    <button class="btn close">+</button>
+
+    <form action="" class="form-popap form-auth">
+      <label for="authorization">Почта:</label>
+      <input type="text" placeholder="Введите свою почту.." class="input-popap authorization">
+      <button type="submit" class="btn-popap get-code">Получить код</button>
+    </form>
+  </div>
+
+  <div class="popap popap--confirmation">
+    <p class="popap-title">Подтверждение</p>
+    <button class="btn close">+</button>
+
+    <form action="" class="form-popap form-conf">
+      <label for="confirmation">Код:</label>
+      <input type="text" placeholder="Введите код.." class="input-popap confirmation">
+      <button type="submit" class="btn-popap to-enter">Войти</button>
+    </form>
+  </div>
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
