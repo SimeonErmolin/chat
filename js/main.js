@@ -7,7 +7,7 @@ import { formatTime } from './formatTime.js';
 const cookieToken = getCookie('token');
 modal(cookieToken);
 
-const socket = new WebSocket(`ws://chat1-341409.oa.r.appspot.com/websockets?${cookieToken}`);
+const socket = new WebSocket(`wss://chat1-341409.oa.r.appspot.com/websockets?${cookieToken}`);
 socket.onopen = function (e) {
   socket.send(JSON.stringify({
     text: 'тестовый тест',
