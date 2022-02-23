@@ -11,21 +11,7 @@ requestToServer(URL.REQUEST_MESSAGES, 'GET').then(response => renderServerMessag
 async function renderServerMessages(messages) {
   const userData = await requestToServer(URL.REQUEST_ME, 'GET');
 
-  messages.forEach(item => {
-    const template = UI.CHAT.TEMPLATE.content.cloneNode(true);
-
-    if (userData.email == item.user.email) {
-      template.querySelector('.nickname').innerHTML = 'Я';
-      template.querySelector('.user-message').classList.add('my-message');
-    } else {
-      template.querySelector('.nickname').innerHTML = item.user.name;
-    }
-
-    template.querySelector('.message').innerHTML = item.text;
-    template.querySelector('.time').innerHTML = formatTime(item.createdAt);
-
-    UI.CHAT.WINDOW.append(template);
-  })
+  messages.forEach(item => render(item, userData))
 
   UI.CHAT.WINDOW.scrollTo(0, UI.CHAT.WINDOW.scrollHeight);
 }
@@ -36,24 +22,28 @@ socket.onmessage = function (event) {
   renderWebSocketMessage(JSON.parse(event.data));
 };
 
-async function renderWebSocketMessage(message) {
+async function renderWebSocketMessage(item) {
   const userData = await requestToServer(URL.REQUEST_ME, 'GET');
 
+  render(item, userData)
+
+  UI.CHAT.WINDOW.scrollTo(0, UI.CHAT.WINDOW.scrollHeight);
+}
+
+function render(item, userData) {
   const template = UI.CHAT.TEMPLATE.content.cloneNode(true);
 
-  if (userData.email == message.user.email) {
+  if (userData.email == item.user.email) {
     template.querySelector('.nickname').innerHTML = 'Я';
     template.querySelector('.user-message').classList.add('my-message');
   } else {
-    template.querySelector('.nickname').innerHTML = message.user.name;
+    template.querySelector('.nickname').innerHTML = item.user.name;
   }
 
-  template.querySelector('.message').innerHTML = message.text;
-  template.querySelector('.time').innerHTML = formatTime(message.createdAt);
+  template.querySelector('.message').innerHTML = item.text;
+  template.querySelector('.time').innerHTML = formatTime(item.createdAt);
 
   UI.CHAT.WINDOW.append(template);
-
-  UI.CHAT.WINDOW.scrollTo(0, UI.CHAT.WINDOW.scrollHeight);
 }
 
 UI.CHAT.BTN_SEND_MESSAGE.addEventListener('click', addMessageHtml);
