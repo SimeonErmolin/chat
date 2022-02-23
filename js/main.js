@@ -1,11 +1,10 @@
-import { UI, UI_SETTINGS, UI_AUTHORIZATION, UI_CONFIRMATION, URL } from './view.js';
+import { UI, URL } from './view.js';
 import { modal } from './modal.js';
-import { getCookie, setCookie } from './cookie.js';
+import { getCookie } from './cookie.js';
 import { requestToServer } from './network.js';
 import { formatTime } from './formatTime.js';
 
-const cookieToken = getCookie('token');
-modal(cookieToken);
+modal();
 
 requestToServer(URL.URL_REQUEST_MESSAGES, 'GET').then(response => renderServerMessages(response.messages));
 
@@ -21,7 +20,7 @@ function renderServerMessages(messages) {
   })
 }
 
-const socket = new WebSocket(`ws://chat1-341409.oa.r.appspot.com/websockets?${cookieToken}`);
+const socket = new WebSocket(`wss://chat1-341409.oa.r.appspot.com/websockets?${getCookie('token')}`);
 
 socket.onmessage = function (event) {
   renderWebSocketMessage(JSON.parse(event.data));
@@ -59,51 +58,4 @@ function addMessageHtml() {
   }));
 
   UI.FORM_CHAT.reset();
-}
-
-UI_SETTINGS.BTN_SEND_NAME.addEventListener('click', sendName);
-
-function sendName() {
-  event.preventDefault();
-
-  if (UI_SETTINGS.INPUT_NAME.value == "") return;
-
-  requestToServer(URL.URL_REQUEST, 'PATCH', { name: `${UI_SETTINGS.INPUT_NAME.value}` });
-
-  UI_SETTINGS.FORM_SETTINGS.reset();
-
-  UI_SETTINGS.POPAP_SETTINGS.classList.remove('active');
-  UI.PAGE.classList.remove('hidden');
-  document.body.classList.remove('body-color')
-}
-
-UI_AUTHORIZATION.BTN_GET_CODE.addEventListener('click', getCode);
-
-function getCode() {
-  event.preventDefault();
-
-  if (UI_AUTHORIZATION.INPUT_AUTHORIZATION.value == "") return;
-
-  requestToServer(URL.URL_REQUEST, 'POST', { email: `${UI_AUTHORIZATION.INPUT_AUTHORIZATION.value}` });
-
-  UI_AUTHORIZATION.FORM_AUTH.reset();
-
-  UI_AUTHORIZATION.POPAP_AUTHORIZATION.classList.remove('active');
-  UI_CONFIRMATION.POPAP_CONFIRMATION.classList.add('active');
-}
-
-UI_CONFIRMATION.BTN_TO_ENTER.addEventListener('click', saveToken);
-
-function saveToken() {
-  event.preventDefault();
-
-  if (UI_CONFIRMATION.INPUT_CONFIRMATION.value == "") return;
-
-  setCookie('token', UI_CONFIRMATION.INPUT_CONFIRMATION.value, 'max-age=86400e3');
-
-  UI_CONFIRMATION.FORM_CONF.reset();
-
-  UI_CONFIRMATION.POPAP_CONFIRMATION.classList.remove('active');
-  UI.PAGE.classList.remove('hidden');
-  document.body.classList.remove('body-color');
 }
