@@ -6,30 +6,30 @@ import { formatTime } from './formatTime.js';
 
 modal();
 
-requestToServer(URL.URL_REQUEST_MESSAGES, 'GET').then(response => renderServerMessages(response.messages));
+requestToServer(URL.REQUEST_MESSAGES, 'GET').then(response => renderServerMessages(response.messages));
 
 function renderServerMessages(messages) {
   messages.forEach(item => {
-    const template = UI.TEMPLATE_MY_MESSAGE.content.cloneNode(true);
+    const template = UI.CHAT.TEMPLATE.content.cloneNode(true);
 
     template.querySelector('.nickname').innerHTML = item.username;
     template.querySelector('.message').innerHTML = item.message;
     template.querySelector('.time').innerHTML = formatTime(item.createdAt);
 
-    UI.CHAT_WINDOW.append(template);
+    UI.CHAT.WINDOW.append(template);
   })
 }
 
-const socket = new WebSocket(`wss://chat1-341409.oa.r.appspot.com/websockets?${getCookie('token')}`);
+const socket = new WebSocket(`ws://chat1-341409.oa.r.appspot.com/websockets?${getCookie('token')}`);
 
 socket.onmessage = function (event) {
   renderWebSocketMessage(JSON.parse(event.data));
 };
 
 async function renderWebSocketMessage(message) {
-  const userData = await requestToServer(URL.URL_REQUEST_ME, 'GET');
+  const userData = await requestToServer(URL.REQUEST_ME, 'GET');
 
-  const template = UI.TEMPLATE_MY_MESSAGE.content.cloneNode(true);
+  const template = UI.CHAT.TEMPLATE.content.cloneNode(true);
 
   if (userData.email == message.user.email) {
     template.querySelector('.nickname').innerHTML = 'Я';
@@ -41,21 +41,21 @@ async function renderWebSocketMessage(message) {
   template.querySelector('.message').innerHTML = message.text;
   template.querySelector('.time').innerHTML = formatTime(message.createdAt);
 
-  UI.CHAT_WINDOW.append(template);
+  UI.CHAT.WINDOW.append(template);
 
-  UI.CHAT_WINDOW.scrollTo(0, UI.CHAT_WINDOW.scrollHeight);
+  UI.CHAT.WINDOW.scrollTo(0, UI.CHAT.WINDOW.scrollHeight);
 }
 
-UI.BTN_SEND_MESSAGE.addEventListener('click', addMessageHtml);
+UI.CHAT.BTN_SEND_MESSAGE.addEventListener('click', addMessageHtml);
 
 function addMessageHtml() {
   event.preventDefault();
 
-  if (UI.INPUT_TEXT_MESSAGE.value == "") return;
+  if (UI.CHAT.INPUT.value == "") return;
 
   socket.send(JSON.stringify({
-    text: `${UI.INPUT_TEXT_MESSAGE.value}`,
+    text: `${UI.CHAT.INPUT.value}`,
   }));
 
-  UI.FORM_CHAT.reset();
+  UI.CHAT.FORM.reset();
 }

@@ -1,23 +1,23 @@
-import { UI, UI_SETTINGS, UI_AUTHORIZATION, UI_CONFIRMATION, URL } from './view.js';
+import { UI, URL } from './view.js';
 import { requestToServer } from './network.js';
 import { deleteCookie, setCookie, getCookie } from './cookie.js';
 
 export function modal() {
   if (!getCookie('token')) {
-    UI_AUTHORIZATION.POPAP_AUTHORIZATION.classList.add('active');
-    UI.PAGE.classList.add('hidden');
+    UI.AUTHORIZATION.POPAP.classList.add('active');
+    UI.CHAT.PAGE.classList.add('hidden');
     document.body.classList.add('body-color');
   }
 
-  UI_SETTINGS.BTN_SETTINGS.addEventListener('click', () => showPopap(UI_SETTINGS.POPAP_SETTINGS));
+  UI.SETTINGS.BTN.addEventListener('click', () => showPopap(UI.SETTINGS.POPAP));
 
   function showPopap(elem) {
     elem.classList.add('active');
-    UI.PAGE.classList.add('hidden');
+    UI.CHAT.PAGE.classList.add('hidden');
     document.body.classList.add('body-color');
   }
 
-  UI.BTN_CLOSE.forEach(function (item) {
+  UI.CHAT.BTN_CLOSE.forEach(function (item) {
     item.addEventListener('click', closePopap);
   })
 
@@ -27,57 +27,57 @@ export function modal() {
     } else {
       this.parentElement.classList.remove('active');
     }
-    UI.PAGE.classList.remove('hidden');
+    UI.CHAT.PAGE.classList.remove('hidden');
     document.body.classList.remove('body-color');
   }
 
-  UI.BTN_OUT.addEventListener('click', callAuthorization);
+  UI.CHAT.BTN_OUT.addEventListener('click', callAuthorization);
 
   function callAuthorization() {
     deleteCookie('token');
     modal();
   }
 
-  UI_SETTINGS.BTN_SEND_NAME.addEventListener('click', sendName);
+  UI.SETTINGS.BTN_SEND_NAME.addEventListener('click', sendName);
 
   function sendName() {
     event.preventDefault();
 
-    if (UI_SETTINGS.INPUT_NAME.value == "") return;
+    if (UI.SETTINGS.INPUT.value == "") return;
 
-    requestToServer(URL.URL_REQUEST, 'PATCH', { name: `${UI_SETTINGS.INPUT_NAME.value}` });
+    requestToServer(URL.REQUEST, 'PATCH', { name: `${UI.SETTINGS.INPUT.value}` });
 
-    UI_SETTINGS.FORM_SETTINGS.reset();
+    UI.SETTINGS.FORM.reset();
 
-    closePopap(UI_SETTINGS.POPAP_SETTINGS);
+    closePopap(UI.SETTINGS.POPAP);
   }
 
-  UI_AUTHORIZATION.BTN_GET_CODE.addEventListener('click', getCode);
+  UI.AUTHORIZATION.BTN.addEventListener('click', getCode);
 
   function getCode() {
     event.preventDefault();
 
-    if (UI_AUTHORIZATION.INPUT_AUTHORIZATION.value == "") return;
+    if (UI.AUTHORIZATION.INPUT.value == "") return;
 
-    requestToServer(URL.URL_REQUEST, 'POST', { email: `${UI_AUTHORIZATION.INPUT_AUTHORIZATION.value}` });
+    requestToServer(URL.REQUEST, 'POST', { email: `${UI.AUTHORIZATION.INPUT.value}` });
 
-    UI_AUTHORIZATION.FORM_AUTH.reset();
+    UI.AUTHORIZATION.FORM.reset();
 
-    closePopap(UI_AUTHORIZATION.POPAP_AUTHORIZATION);
-    showPopap(UI_CONFIRMATION.POPAP_CONFIRMATION)
+    closePopap(UI.AUTHORIZATION.POPAP);
+    showPopap(UI.CONFIRMATION.POPAP)
   }
 
-  UI_CONFIRMATION.BTN_TO_ENTER.addEventListener('click', saveToken);
+  UI.CONFIRMATION.BTN.addEventListener('click', saveToken);
 
   function saveToken() {
     event.preventDefault();
 
-    if (UI_CONFIRMATION.INPUT_CONFIRMATION.value == "") return;
+    if (UI.CONFIRMATION.INPUT.value == "") return;
 
-    setCookie('token', UI_CONFIRMATION.INPUT_CONFIRMATION.value, 'max-age=86400e3');
+    setCookie('token', UI.CONFIRMATION.INPUT.value, 'max-age=86400e3');
 
-    UI_CONFIRMATION.FORM_CONF.reset();
+    UI.CONFIRMATION.FORM.reset();
 
-    closePopap(UI_CONFIRMATION.POPAP_CONFIRMATION);
+    closePopap(UI.CONFIRMATION.POPAP);
   }
 }
