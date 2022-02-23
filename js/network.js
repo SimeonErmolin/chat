@@ -11,8 +11,7 @@ export async function requestToServer(url, method, body) {
       body: JSON.stringify(body)
     })
     const result = await response.json();
-    // console.log(result)
-    return result
+    return result;
   } catch (err) {
     alert(err)
   }

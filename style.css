@@ -14,7 +14,7 @@ p {
 }
 .page {
   margin-top: 5rem;
-  width: 304px;
+  width: 50%;
 }
 .hidden{
   display: none;
@@ -37,8 +37,12 @@ p {
   justify-content: space-between;
 }
 .text-message {
-  width: 248px;
+  width: 100%;
   cursor: text;
+}
+.send-message {
+  width: 40px;
+  margin-left: 5px;
 }
 .chat-window {
   margin-top: 10px;
@@ -52,18 +56,15 @@ p {
   display: flex;
   justify-content: end;
   position: relative;
-  max-width: 270px;
+  max-width: 90%;
   margin: 8px 8px 0;
   padding: 8px;
   padding-bottom: 28px;
   background: #F7F7F7;
-  word-wrap: break-word;
+  float: left;
 }
 .my-message {
   float: right;
-}
-.another-message {
-  float: left;
 }
 .delivered {
   background: #E5E5E5;
@@ -77,7 +78,7 @@ p {
 }
 .message {
   display: inline;
-  max-width: 250px;
+  word-wrap: break-word;
 }
 .time {
   position: absolute;
