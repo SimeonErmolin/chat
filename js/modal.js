@@ -46,6 +46,7 @@ export function modal() {
     if (UI.SETTINGS.INPUT.value == "") return;
 
     requestToServer(URL.REQUEST, 'PATCH', { name: `${UI.SETTINGS.INPUT.value}` });
+    requestToServer(URL.REQUEST_ME, 'GET').then(response => localStorage.setItem('userData', JSON.stringify(response)));
 
     UI.SETTINGS.FORM.reset();
 
